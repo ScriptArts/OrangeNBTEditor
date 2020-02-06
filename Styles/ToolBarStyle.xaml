@@ -1,0 +1,129 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="ToolBarStyle" TargetType="ToolBar">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolBar">
+                    <Border x:Name="border">
+                        <DockPanel>
+                            <ToggleButton
+                                DockPanel.Dock="Right"
+                                Width="10"
+                                Margin="0,0,8,0"
+                                IsEnabled="{TemplateBinding HasOverflowItems}"
+                                ClickMode="Press"
+                                IsChecked="{Binding IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <Popup x:Name="OverflowPopup"
+                                    AllowsTransparency="True"
+                                    Placement="Bottom"
+                                    StaysOpen="False"
+                                    Focusable="False"
+                                    PopupAnimation="Fade"
+                                    IsOpen="{Binding IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Border
+                                        x:Name="DropDownBorder"
+                                        CornerRadius="5"
+                                        Background="{StaticResource TitleBarBackColor}"
+                                        Padding="5">
+                                        <ToolBarOverflowPanel
+                                            x:Name="PART_ToolBarOverflowPanel"
+                                            WrapWidth="200"/>
+                                    </Border>
+                                </Popup>
+                                <ToggleButton.Style>
+                                    <!-- オーバーフロー時のトグルボタン -->
+                                    <Style TargetType="ToggleButton">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ToggleButton">
+                                                    <Border
+                                                        x:Name="border"
+                                                        Background="{StaticResource TitleBarBackColor}"
+                                                        CornerRadius="0,5,5,0">
+                                                        <Grid>
+                                                            <Path x:Name="path" Fill="{StaticResource ForeColor}"/>
+                                                            <ContentPresenter/>
+                                                        </Grid>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsChecked" Value="False">
+                                                            <Setter TargetName="path" Property="Data" Value="M2,17 L8,17 L5,22 Z"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsChecked" Value="True">
+                                                            <Setter TargetName="path" Property="Data" Value="M2,22 L8,22 L5,17 Z"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter
+                                                                TargetName="border"
+                                                                Property="Background"
+                                                                Value="{StaticResource MenuHoverColor}"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsEnabled" Value="False">
+                                                            <Setter Property="Visibility" Value="Hidden"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ToggleButton.Style>
+                            </ToggleButton>
+                            <ToolBarPanel x:Name="PART_ToolBarPanel" IsItemsHost="True"/>
+                        </DockPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Resources>
+            <!-- ツールバーのボタン -->
+            <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border
+                                x:Name="border"
+                                Width="24"
+                                Height="25"
+                                Background="Transparent"
+                                UseLayoutRounding="True">
+                                <Image
+                                    x:Name="image"
+                                    Width="16"
+                                    Height="16"
+                                    Opacity="0.9"
+                                    Source="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter
+                                        TargetName="border"
+                                        Property="Background"
+                                        Value="{StaticResource ButtonHoverColor}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="image" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- ツールバーのセパレーター -->
+            <Style x:Key="{x:Static ToolBar.SeparatorStyleKey}" TargetType="Separator">
+                <Setter Property="Margin" Value="0,2" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Separator">
+                            <Border
+                                Width="1"
+                                Background="{StaticResource SeparatorColor}"
+                                Margin="2,0"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.Resources>
+    </Style>
+</ResourceDictionary>

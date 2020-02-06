@@ -1,0 +1,111 @@
+﻿<Window
+    x:Class="OrangeNBTEditor.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:model="clr-namespace:OrangeNBTEditor.Models"
+    Title="OrangeNBTEditor(仮名)"
+    Height="450"
+    Width="800"
+    MinWidth="300"
+    MinHeight="200"
+    Icon="../Assets/Icons/OrangeNBTEditorIcon.png"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Style="{StaticResource WindowStyle}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!-- メニュー -->
+        <Menu
+            Grid.Row="0"
+            Height="25"
+            VerticalAlignment="Top"
+            Style="{StaticResource MenuStyle}"
+            UseLayoutRounding="True">
+            <MenuItem Header="ファイル" Width="60" Height="25" Padding="0">
+                <MenuItem Header="開く" Icon="/Assets/Img/File.png" Command="{Binding FileOpenCommand}"/>
+                <MenuItem Header="フォルダを開く" Icon="/Assets/Img/Folder.png" Command="{Binding FolderOpenCommand}"/>
+                <MenuItem Header="ワールドフォルダを開く" Icon="/Assets/Img/McFolder.png" Command="{Binding WorldOpenCommand}"/>
+                <Separator/>
+                <MenuItem Header="エクスプローラーで開く" Icon="/Assets/Img/Explorer.png" Command="{Binding ExplorerOpenCommand}"/>
+                <Separator/>
+                <MenuItem Header="保存" Icon="/Assets/Img/Save.png" Command="{Binding SaveCommand}"/>
+                <MenuItem Header="リフレッシュ" Icon="/Assets/Img/Refresh.png" Command="{Binding RefreshCommand}"/>
+                <Separator/>
+                <MenuItem Header="最近使用したファイル" Icon="/Assets/Img/RecentFile.png">
+                    <MenuItem Header="Foo"/>
+                    <MenuItem Header="Foo"/>
+                    <MenuItem Header="Foo"/>
+                </MenuItem>
+                <MenuItem Header="最近使用したフォルダ" Icon="/Assets/Img/RecentFolder.png"/>
+                <Separator/>
+                <MenuItem Header="終了" Icon="/Assets/Img/Exit.png" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <MenuItem Header="編集" Width="60">
+                <MenuItem Header="切り取り" Icon="/Assets/Img/Cut.png" Command="{Binding CutCommand}"/>
+                <MenuItem Header="コピー" Icon="/Assets/Img/Copy.png" Command="{Binding CopyCommand}"/>
+                <MenuItem Header="貼り付け" Icon="/Assets/Img/Paste.png" Command="{Binding PasteCommand}"/>
+                <Separator/>
+                <MenuItem Header="名前の変更" Icon="/Assets/Img/Rename.png" Command="{Binding RenameCommand}"/>
+                <MenuItem Header="値を編集" Icon="/Assets/Img/Edit.png" Command="{Binding EditCommand}"/>
+                <MenuItem Header="削除" Icon="/Assets/Img/Delete.png" Command="{Binding DeleteCommand}"/>
+                <Separator/>
+                <MenuItem Header="上に移動" Icon="/Assets/Img/Up.png" Command="{Binding MoveUpCommand}"/>
+                <MenuItem Header="下に移動" Icon="/Assets/Img/Down.png" Command="{Binding MoveDownCommand}"/>
+            </MenuItem>
+            <MenuItem Header="検索" Width="60">
+                <MenuItem Header="検索" Icon="/Assets/Img/Search.png" Command="{Binding SearchCommand}"/>
+                <MenuItem Header="次を検索" Icon="/Assets/Img/NextSearch.png" Command="{Binding SearchNextCommand}"/>
+                <Separator/>
+                <MenuItem Header="置換" Icon="/Assets/Img/Replace.png" Command="{Binding ReplaceCommand}"/>
+                <Separator/>
+                <MenuItem Header="チャンク検索" Icon="/Assets/Img/ChunkSearch.png" Command="{Binding SearchChunkCommand}"/>
+            </MenuItem>
+            <MenuItem Header="ヘルプ" Width="60">
+                <MenuItem Header="About" Icon="/Assets/Img/About.png" Command="{Binding AboutCommand}"/>
+            </MenuItem>
+        </Menu>
+        <!-- ツールバー -->
+        <ToolBarTray Grid.Row="1" Background="{StaticResource TitleBarBackColor}">
+            <ToolBar Background="{StaticResource TitleBarBackColor}" Style="{StaticResource ToolBarStyle}">
+                <Button Content="/Assets/Icons/File.png" ToolTip="開く" Command="{Binding FileOpenCommand}"/>
+                <Button Content="/Assets/Icons/Folder.png" ToolTip="フォルダを開く" Command="{Binding FolderOpenCommand}"/>
+                <Button Content="/Assets/Icons/Save.png" ToolTip="保存" Command="{Binding SaveCommand}"/>
+                <Button Content="/Assets/Icons/Refresh.png" ToolTip="リフレッシュ" Command="{Binding RefreshCommand}"/>
+                <Separator/>
+                <Button Content="/Assets/Icons/Cut.png" ToolTip="切り取り" Command="{Binding CutCommand}"/>
+                <Button Content="/Assets/Icons/Copy.png" ToolTip="コピー" Command="{Binding CopyCommand}"/>
+                <Button Content="/Assets/Icons/Paste.png" ToolTip="貼り付け" Command="{Binding PasteCommand}"/>
+                <Separator/>
+                <Button Content="/Assets/Icons/Rename.png" ToolTip="名前の変更" Command="{Binding RenameCommand}"/>
+                <Button Content="/Assets/Icons/Edit.png" ToolTip="値を編集" Command="{Binding EditCommand}"/>
+                <Button Content="/Assets/Icons/Delete.png" ToolTip="タグを削除" Command="{Binding DeleteCommand}"/>
+                <Separator/>
+                <Button Content="/Assets/Icons/ByteTag.png" ToolTip="Byteタグを追加" Tag="1"/>
+                <Button Content="/Assets/Icons/ShortTag.png" ToolTip="Shortタグを追加" Tag="2"/>
+                <Button Content="/Assets/Icons/IntTag.png" ToolTip="Intタグを追加" Tag="3"/>
+                <Button Content="/Assets/Icons/LongTag.png" ToolTip="Longタグを追加" Tag="4"/>
+                <Button Content="/Assets/Icons/FloatTag.png" ToolTip="Floatタグを追加" Tag="5"/>
+                <Button Content="/Assets/Icons/DoubleTag.png" ToolTip="Doubleタグを追加" Tag="6"/>
+                <Button Content="/Assets/Icons/StringTag.png" ToolTip="Stringタグを追加" Tag="8"/>
+                <Button Content="/Assets/Icons/ByteArrayTag.png" ToolTip="Byte配列タグを追加" Tag="7"/>
+                <Button Content="/Assets/Icons/IntArrayTag.png" ToolTip="Int配列タグを追加" Tag="11"/>
+                <Button Content="/Assets/Icons/LongArrayTag.png" ToolTip="Long配列タグを追加" Tag="12"/>
+                <Button Content="/Assets/Icons/ListTag.png" ToolTip="Listタグを追加" Tag="9"/>
+                <Button Content="/Assets/Icons/CompoundTag.png" ToolTip="Compoundタグを追加" Tag="10"/>
+                <Separator/>
+                <Button Content="/Assets/Icons/Search.png" ToolTip="検索 / 次を検索"/>
+            </ToolBar>
+        </ToolBarTray>
+        <TreeView
+            x:Name="treeView"
+            Grid.Row="2"
+            ItemsSource="{Binding Source={x:Static model:DataStore.TreeData}}"
+            Style="{StaticResource TreeViewStyle}"
+            AllowDrop="True">
+        </TreeView>
+    </Grid>
+</Window>
